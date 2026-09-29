@@ -1,6 +1,16 @@
 import axios from 'axios';
 
-const API_BASE = '/api';
+// Use production backend URL if configured in environment, otherwise default to relative /api
+const getApiBase = () => {
+  const envUrl = import.meta.env.VITE_API_URL;
+  if (envUrl) {
+    const cleanUrl = envUrl.replace(/\/$/, '');
+    return cleanUrl.endsWith('/api') ? cleanUrl : `${cleanUrl}/api`;
+  }
+  return '/api';
+};
+
+const API_BASE = getApiBase();
 
 export const api = {
   getHealth: async () => {

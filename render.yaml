@@ -1,0 +1,17 @@
+services:
+  - type: web
+    name: recall-x-backend
+    env: python
+    region: oregon
+    plan: free
+    buildCommand: pip install -r requirements.txt && python seed_demo.py
+    startCommand: uvicorn backend.main:app --host 0.0.0.0 --port $PORT
+    envVars:
+      - key: GROQ_MODEL
+        value: llama-3.3-70b-versatile
+      - key: HINDSIGHT_API_URL
+        value: http://localhost:8888
+      - key: HINDSIGHT_BANK_ID
+        value: recall-x-incidents
+      - key: GROQ_API_KEY
+        sync: false
